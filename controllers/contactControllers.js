@@ -12,6 +12,12 @@ const getContacts = (req, res) => {
 
 const createContacts = (req, res) => {
   console.log("This is a request body :", req.body);
+  const { name, email, phone } = req.body;
+
+  if (!name || !email || !phone) {
+    res.status(400);
+    throw new Error("All fields are mandatory!");
+  }
   res.status(201).json({ message: "Create contact" });
 };
 
