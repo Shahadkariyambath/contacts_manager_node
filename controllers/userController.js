@@ -53,7 +53,7 @@ const loginrUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
   // compare
-  if (user || (await bcrypt.compare(password, user.password))) {
+  if (user && (await bcrypt.compare(password, user.password))) {
     const accessToken = jwt.sign(
       {
         user: {
@@ -76,7 +76,7 @@ const loginrUser = asyncHandler(async (req, res) => {
 //@routes GET /api/users/current
 //@access private
 const CurrentUser = asyncHandler(async (req, res) => {
-  res.json({ message: "Current user information" });
+  res.json(req.user);
 });
 
 module.exports = { registerUser, loginrUser, CurrentUser };
